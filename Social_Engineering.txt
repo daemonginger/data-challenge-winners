@@ -1,0 +1,4 @@
+Groupe de Samuel GD, Samuel D et Joseph E:
+
+Ils ont demandé à un mec swag de les aider un peu apparemment. Il leur a parlé des n-gram (seems fair), naive bayes (seems fair)
+et de LDA (why ?).
