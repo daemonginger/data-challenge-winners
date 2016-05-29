@@ -15,13 +15,13 @@ INCDIR = ../inc
 CFLAGS = -std=c++11 -O2 -Wall -Wextra
 
 # Specify object files
-OBJECT_FILES = test.o loaders.o
+OBJECT_FILES = test.o loaders.o vectorizers.o naive_bayes.o utils.o
 
 # Specify source files
-SOURCE_FILES = test.cpp loaders.cpp
+SOURCE_FILES = test.cpp loaders.cpp vectorizers.cpp naive_bayes.cpp utils.cpp
 
 # Specify header files
-HEADER_FILES = test.hpp loaders.hpp
+HEADER_FILES = test.hpp loaders.hpp vectorizers.hpp naive_bayes.hpp utils.hpp
 
 # Default target
 .PHONY: all

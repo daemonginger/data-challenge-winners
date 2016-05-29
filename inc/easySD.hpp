@@ -5,4 +5,10 @@
 
 #include"loaders.hpp"
 
+#include"vectorizers.hpp"
+
+#include"naive_bayes.hpp"
+
+#include"utils.hpp"
+
 #endif

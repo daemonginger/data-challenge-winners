@@ -1,0 +1,7 @@
+loaders OK
+vectorizers
+TF-IDF
+bayes bernouilli
+bayes gaussian
+n-gram
+lemmatization
