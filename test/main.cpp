@@ -1,11 +1,12 @@
 #include<iostream>
 #include"easySD.hpp"
+#include <boost/numeric/ublas/matrix_proxy.hpp>
 #include<unordered_set>
 #include<algorithm>
 
 using namespace std;
 
-vector<int> grams = {1,2};
+vector<int> grams = {1};
 
 int main(void)
 {
@@ -30,27 +31,37 @@ int main(void)
 	
 // 	vector<unordered_map<string,int> > x_train2 = vectorizers::count_vectorize(x_train,stopwords);
 	
-	vector<unordered_map<string,int> > x_train2 = vectorizers::n_gram_vectorize(x_train,grams);
-	for(auto p : x_train2[29])
-			cout << p.first << endl;
+	sparsem x_train2 = vectorizers::bin_vectorize(x_train);
+	int n_features = x_train2.size2();
+	bernouilli_naive_bayes clf(0.5);
+	int taken_samples = 3800,n = x_train2.size1();
+	sparsem x_train3 = boost::numeric::ublas::subrange(x_train2, 0,taken_samples, 0,n_features);
+	sparsem x_valid = boost::numeric::ublas::subrange(x_train2, taken_samples,n, 0,n_features);
+	
+	vector<bool> y_train3(y_train.begin(),y_train.begin() + taken_samples);
+	vector<bool> y_valid(y_train.begin() + taken_samples,y_train.end());
+	clf.fit(x_train3,y_train3);
+	std::vector<bool> y_pred = clf.predict(x_valid);
+	cout << utils::score(y_pred,y_valid) << endl;
+	
+// 	vector<unordered_map<string,int> > x_train2 = vectorizers::n_gram_vectorize(x_train,grams);
+// 	for(auto p : x_train2[29])
+// 			cout << p.first << endl;
 	
 	////// Tentative of Naïve Bayes //////
 	
 	// Seems like for now the only way to make the classifier work better than random is by tuning alpha = 0...
 	
-	int taken_samples = 3800;
-	
-	vector<unordered_map<string,int> > x_train3(x_train2.begin(),x_train2.begin() + taken_samples);
-	vector<bool> y_train3(y_train.begin(),y_train.begin() + taken_samples);
-	
-	vector<unordered_map<string,int> > x_valid(x_train2.begin() + taken_samples,x_train2.end());
-	vector<bool> y_valid(y_train.begin() + taken_samples,y_train.end());
-	
-	naive_bayes clf(0.);
-	clf.fit2(x_train3,y_train3);
-	auto y_pred = clf.predict3(x_valid);
-	
-	cout << utils::score(y_pred,y_valid) << endl;
+// 	
+// 	vector<unordered_map<string,int> > x_train3(x_train2.begin(),x_train2.begin() + taken_samples);
+// 	
+// 	vector<unordered_map<string,int> > x_valid(x_train2.begin() + taken_samples,x_train2.end());
+// 	
+// 	naive_bayes clf(0.5);
+// 	clf.fit2(x_train3,y_train3);
+// 	auto y_pred = clf.predict3(x_valid);
+// 	
+// 	cout << utils::score(y_pred,y_valid) << endl;
 	
 	return 0;
 }

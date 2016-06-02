@@ -1,5 +1,7 @@
 #include"vectorizers.hpp"
 
+using namespace boost::numeric::ublas;
+
 std::vector<std::unordered_set<std::string> > vectorizers::hash_vectorize(const std::vector<std::vector<std::string> >& text,const std::unordered_set<std::string>& stopwords = std::unordered_set<std::string>())
 {
 	std::vector<std::unordered_set<std::string> > hashed_text(text.size());
@@ -59,4 +61,30 @@ std::vector<std::unordered_map<std::string,int> > vectorizers::n_gram_vectorize(
 		}
 	}
 	return counted_text;
+}
+
+sparsem vectorizers::bin_vectorize(const std::vector<std::vector<std::string> >& text)
+{
+	std::map<std::string,int> voca;
+	for(auto sample : text)
+		for(auto word : sample)
+			voca[word] = 1;
+		
+	int cmp = 0;
+	for(auto& p : voca)
+		p.second = cmp++;
+	sparsem ans(text.size(), cmp);
+	
+	for(int i=0;i<(int)text.size();i++)
+	{
+		auto sample = text[i];
+		sort(sample.begin(),sample.end());
+		for(auto word : sample)
+		{
+			if(!ans(i,voca[word]))
+				ans.push_back(i,voca[word],1.);
+		}
+	}
+	
+	return ans;
 }

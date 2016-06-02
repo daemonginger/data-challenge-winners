@@ -11,4 +11,6 @@
 
 #include"utils.hpp"
 
+#include"bernouilli_naive_bayes.hpp"
+
 #endif

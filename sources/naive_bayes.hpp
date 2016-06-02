@@ -2,6 +2,7 @@
 #define NAIVEBAYES_L
 
 #include<unordered_map>
+#include<unordered_set>
 #include<vector>
 #include<string>
 
@@ -33,6 +34,8 @@ private:
 	int voca[2] = {0};
 	// Number of documents in classes separately
 	int docs[2] = {0};
+	// Entire vocabulary of the fitted documents
+	std::unordered_set<std::string> voc;
 	
 public:
 	naive_bayes(const double&);

@@ -1,4 +1,6 @@
 #include"naive_bayes.hpp"
+#include<iostream>
+#include<cmath>
 
 naive_bayes::naive_bayes(const double& _alpha):alpha(_alpha) {}
 
@@ -12,6 +14,7 @@ void naive_bayes::fit(const std::vector<std::unordered_map<std::string,int> >& t
 		++docs[labels[i]];
 		for(auto p : sample)
 		{
+			voc.insert(p.first);
 			occurances[labels[i]][p.first] += p.second;
 			total[labels[i]] += p.second;
 		}
@@ -31,6 +34,7 @@ void naive_bayes::fit2(const std::vector<std::unordered_map<std::string,int> >& 
 		++docs[labels[i]];
 		for(auto p : sample)
 		{
+			voc.insert(p.first);
 			++occurances[labels[i]][p.first];
 			total[labels[i]] += p.second;
 		}
@@ -101,15 +105,42 @@ std::vector<bool> naive_bayes::predict3(const std::vector<std::unordered_map<std
 		double score[2] = {1.};
 		for(int k=0;k<2;k++)
 		{
-			score[k] = docs[k];
-			for(auto& p : text[i])
+			score[k] = log(docs[k]);
+// 			std::cout << score[k] << std::endl;
+			
+// 			for(auto p : occurances[k])
+// 			{
+// 				std::string word = p.first;
+// 				if(text[i].find(word) == text[i].end())
+// 				{
+// 					// 					std::cout << "yo" << std::endl;
+// 					score[k] += log(1. - (alpha + occurances[k][word])/(2.*alpha + docs[k]));
+// 				}
+// 			}
+			
+			for(auto word : voc)
 			{
-				std::string word = p.first;
-				
-				for(int j=0;j<p.second;j++)
-					score[k] *= (alpha + occurances[k][word])/(alpha + docs[k]);
+				if(text[i].find(word) != text[i].end())
+				{
+// 					std::cout << "yo" << std::endl;
+					score[k] += log((alpha + occurances[k][word])/(2*alpha + docs[k]));
+				}
+				else
+				{
+// 					std::cout << "hey" << std::endl;
+					score[k] += log(1 - (alpha + occurances[k][word])/(2*alpha + docs[k]));
+				}
 			}
+			
+// 			for(auto& p : text[i])
+// 			{
+// 				std::string word = p.first;
+// 				
+// 				for(int j=0;j<p.second;j++)
+// 					score[k] *= (alpha + occurances[k][word])/(alpha + docs[k]);
+// 			}
 		}
+// 		std::cout << score[0] << " " << score[1] << std::endl;
 		labels[i] = (score[1] > score[0]);
 	}
 	

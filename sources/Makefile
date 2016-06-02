@@ -15,13 +15,13 @@ INCDIR = ../inc
 CFLAGS = -std=c++11 -O2 -Wall -Wextra
 
 # Specify object files
-OBJECT_FILES = test.o loaders.o vectorizers.o naive_bayes.o utils.o
+OBJECT_FILES = test.o loaders.o vectorizers.o naive_bayes.o utils.o bernouilli_naive_bayes.o
 
 # Specify source files
-SOURCE_FILES = test.cpp loaders.cpp vectorizers.cpp naive_bayes.cpp utils.cpp
+SOURCE_FILES = test.cpp loaders.cpp vectorizers.cpp naive_bayes.cpp utils.cpp bernouilli_naive_bayes.cpp
 
 # Specify header files
-HEADER_FILES = test.hpp loaders.hpp vectorizers.hpp naive_bayes.hpp utils.hpp
+HEADER_FILES = test.hpp loaders.hpp vectorizers.hpp naive_bayes.hpp utils.hpp bernouilli_naive_bayes.hpp
 
 # Default target
 .PHONY: all
@@ -35,12 +35,13 @@ $(OUTPUTFILE): $(OBJECT_FILES)
 $(OBJECT_FILES): $(SOURCE_FILES) $(HEADER_FILES)
 	$(CC) $(CFLAGS) -c $(SOURCE_FILES)
 
+# Add *.h if shit happens.
 .PHONY: install
 install:$(OUTPUTFILE)
 	mkdir -p $(INSTALLDIR)
 	cp -p $(OUTPUTFILE) $(INSTALLDIR)
 	mkdir -p $(INCDIR)
-	cp -p *.h *.hpp $(INCDIR)
+	cp -p *.hpp $(INCDIR)
 
 .PHONY: clean 
 clean:
