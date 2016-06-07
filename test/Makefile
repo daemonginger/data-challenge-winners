@@ -5,7 +5,7 @@
 CC = g++
 
 # Specify compiler options
-CFLAGS = -std=c++11 -O2 -Wall -Wextra
+CFLAGS = -std=c++11 -O2 -Wall -Wextra -larmadillo
 INC_PATH = -I ../inc
 LIB_PATH = -L ../lib -l easySD
 
@@ -24,7 +24,7 @@ all: $(OUTPUTFILE)
 
 # Build target from object files
 $(OUTPUTFILE): $(OBJECT_FILES)
-	$(CC) $(CFLAGS) $(INC_PATH) $(OBJECT_FILES) $(LIB_PATH) -o $(OUTPUTFILE)
+	$(CC) $(CFLAGS) $(INC_PATH) $(OBJECT_FILES) $(LIB_PATH) -larmadillo -o $(OUTPUTFILE)
 
 # Build object files from sources
 $(OBJECT_FILES): $(SOURCE_FILES)

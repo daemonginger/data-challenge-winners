@@ -12,7 +12,7 @@ INSTALLDIR  = ../lib
 INCDIR = ../inc
 
 # Specify the compiler options
-CFLAGS = -std=c++11 -O2 -Wall -Wextra
+CFLAGS = -std=c++11 -O2 -Wall -Wextra -larmadillo
 
 # Specify object files
 OBJECT_FILES = test.o loaders.o vectorizers.o naive_bayes.o utils.o bernouilli_naive_bayes.o

@@ -1,10 +1,11 @@
 #include<iostream>
 #include"easySD.hpp"
-#include <boost/numeric/ublas/matrix_proxy.hpp>
 #include<unordered_set>
 #include<algorithm>
+#include <armadillo>
 
 using namespace std;
+using namespace arma;
 
 vector<int> grams = {1};
 
@@ -31,18 +32,18 @@ int main(void)
 	
 // 	vector<unordered_map<string,int> > x_train2 = vectorizers::count_vectorize(x_train,stopwords);
 	
-	sparsem x_train2 = vectorizers::bin_vectorize(x_train);
-	int n_features = x_train2.size2();
-	bernouilli_naive_bayes clf(0.5);
-	int taken_samples = 3800,n = x_train2.size1();
-	sparsem x_train3 = boost::numeric::ublas::subrange(x_train2, 0,taken_samples, 0,n_features);
-	sparsem x_valid = boost::numeric::ublas::subrange(x_train2, taken_samples,n, 0,n_features);
-	
-	vector<bool> y_train3(y_train.begin(),y_train.begin() + taken_samples);
-	vector<bool> y_valid(y_train.begin() + taken_samples,y_train.end());
-	clf.fit(x_train3,y_train3);
-	std::vector<bool> y_pred = clf.predict(x_valid);
-	cout << utils::score(y_pred,y_valid) << endl;
+// 	sparsem x_train2 = vectorizers::bin_vectorize(x_train);
+// 	int n_features = x_train2.size2();
+// 	bernouilli_naive_bayes clf(0.5);
+// 	int taken_samples = 3800,n = x_train2.size1();
+// 	sparsem x_train3 = boost::numeric::ublas::subrange(x_train2, 0,taken_samples, 0,n_features);
+// 	sparsem x_valid = boost::numeric::ublas::subrange(x_train2, taken_samples,n, 0,n_features);
+// 	
+// 	vector<bool> y_train3(y_train.begin(),y_train.begin() + taken_samples);
+// 	vector<bool> y_valid(y_train.begin() + taken_samples,y_train.end());
+// 	clf.fit(x_train3,y_train3);
+// 	std::vector<bool> y_pred = clf.predict(x_valid);
+// 	cout << utils::score(y_pred,y_valid) << endl;
 	
 // 	vector<unordered_map<string,int> > x_train2 = vectorizers::n_gram_vectorize(x_train,grams);
 // 	for(auto p : x_train2[29])
@@ -63,5 +64,8 @@ int main(void)
 // 	
 // 	cout << utils::score(y_pred,y_valid) << endl;
 	
+	SpMat<uchar> A = vectorizers::bin_vectorize(x_train);
+	cout << size(A) << endl;
+	//
 	return 0;
 }

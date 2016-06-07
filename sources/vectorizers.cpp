@@ -1,6 +1,6 @@
 #include"vectorizers.hpp"
 
-using namespace boost::numeric::ublas;
+using namespace arma;
 
 std::vector<std::unordered_set<std::string> > vectorizers::hash_vectorize(const std::vector<std::vector<std::string> >& text,const std::unordered_set<std::string>& stopwords = std::unordered_set<std::string>())
 {
@@ -63,28 +63,37 @@ std::vector<std::unordered_map<std::string,int> > vectorizers::n_gram_vectorize(
 	return counted_text;
 }
 
-sparsem vectorizers::bin_vectorize(const std::vector<std::vector<std::string> >& text)
+SpMat<uchar> vectorizers::bin_vectorize(const std::vector<std::vector<std::string> >& text)
 {
 	std::map<std::string,int> voca;
+	int tot_size = 0;
 	for(auto sample : text)
+	{
+		std::set<std::string> faitchier;
+		for(auto word : sample)
+			faitchier.insert(word);
+		tot_size += faitchier.size();
 		for(auto word : sample)
 			voca[word] = 1;
+	}
+	umat A(2,tot_size);
 		
 	int cmp = 0;
 	for(auto& p : voca)
 		p.second = cmp++;
-	sparsem ans(text.size(), cmp);
 	
+	cmp = 0;
 	for(int i=0;i<(int)text.size();i++)
 	{
 		auto sample = text[i];
-		sort(sample.begin(),sample.end());
+		std::set<std::string> faitchier;
 		for(auto word : sample)
+			faitchier.insert(word);
+		for(auto word : faitchier)
 		{
-			if(!ans(i,voca[word]))
-				ans.push_back(i,voca[word],1.);
+			A(0,cmp) = i;
+			A(1,cmp++) = voca[word];
 		}
 	}
-	
-	return ans;
+	return SpMat<uchar>(A,ones<Col<uchar>>(tot_size));
 }
