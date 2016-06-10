@@ -63,7 +63,7 @@ std::vector<std::unordered_map<std::string,int> > vectorizers::n_gram_vectorize(
 	return counted_text;
 }
 
-SpMat<uchar> vectorizers::bin_vectorize(const std::vector<std::vector<std::string> >& text)
+sp_mat vectorizers::bin_vectorize(const std::vector<std::vector<std::string> >& text)
 {
 	std::map<std::string,int> voca;
 	int tot_size = 0;
@@ -71,13 +71,19 @@ SpMat<uchar> vectorizers::bin_vectorize(const std::vector<std::vector<std::strin
 	{
 		std::set<std::string> faitchier;
 		for(auto word : sample)
+		{
+			transform(word.begin(),word.end(),word.begin(),::tolower);
 			faitchier.insert(word);
+		}
 		tot_size += faitchier.size();
 		for(auto word : sample)
+		{
+			transform(word.begin(),word.end(),word.begin(),::tolower);
 			voca[word] = 1;
+		}
 	}
 	umat A(2,tot_size);
-		
+	cout << voca.size() << endl;
 	int cmp = 0;
 	for(auto& p : voca)
 		p.second = cmp++;
@@ -88,12 +94,16 @@ SpMat<uchar> vectorizers::bin_vectorize(const std::vector<std::vector<std::strin
 		auto sample = text[i];
 		std::set<std::string> faitchier;
 		for(auto word : sample)
+		{
+			transform(word.begin(),word.end(),word.begin(),::tolower);
 			faitchier.insert(word);
+		}
 		for(auto word : faitchier)
 		{
+			transform(word.begin(),word.end(),word.begin(),::tolower);
 			A(0,cmp) = i;
 			A(1,cmp++) = voca[word];
 		}
 	}
-	return SpMat<uchar>(A,ones<Col<uchar>>(tot_size));
+	return sp_mat(A,ones<vec>(tot_size));
 }
