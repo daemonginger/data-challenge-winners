@@ -1,0 +1,14 @@
+Méthode générale : vérifier notre implémentation en regardant ce que fait scikit-learn.
+
+Première étape(12/06) : Sans intercept
+
+En prenant les mêmes données pour le train/test (parser pourri avec 9/10 de train en prenant les samples dans l'ordre).
+On arrive au même résultat (accuracy de 0.773756) avec les deux implems à condition de préciser manuellement le paramètre class_weight (de manière proportionnelle : class_weight={1 : np.sum(y_train)/n, 0 : 1 - np.sum(y_train)/n})
+Notons que l'implem de scikit est par défaut celle de liblinear, décrite dans ce papier :
+https://www.csie.ntu.edu.tw/~cjlin/papers/liblinear.pdf
+
+Je ne sais pas pourquoi préciser manuellement fait une diff, la doc dit que le classifier est sensé régler les choses automatiquement.
+De toute façon on a le meme résultat sans s'en soucier de notre coté.
+
+Seconde étape(12/06) : Avec intercept
+

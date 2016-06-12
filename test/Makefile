@@ -24,7 +24,7 @@ all: $(OUTPUTFILE)
 
 # Build target from object files
 $(OUTPUTFILE): $(OBJECT_FILES)
-	$(CC) $(CFLAGS) $(INC_PATH) $(OBJECT_FILES) $(LIB_PATH) -larmadillo -o $(OUTPUTFILE)
+	$(CC) $(CFLAGS) $(INC_PATH) $(OBJECT_FILES) $(LIB_PATH) -lboost_regex -larmadillo -o $(OUTPUTFILE)
 
 # Build object files from sources
 $(OBJECT_FILES): $(SOURCE_FILES)
