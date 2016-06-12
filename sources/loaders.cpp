@@ -5,7 +5,7 @@
 
 void loaders::load_smileys(const std::string& path, std::vector<std::pair<std::string, bool>>& smileys){
     smileys.clear();
-    std::fstream in(path.c_str(), ios_base::in);
+	 std::fstream in(path.c_str(), std::ios_base::in);
     std::string smiley;
     char x;
     while(in >> smiley){
@@ -15,9 +15,9 @@ void loaders::load_smileys(const std::string& path, std::vector<std::pair<std::s
     in.close();
 }
 
-void loaders::load_corrections(const std::string& path, std::vector<std::pair<std::string, std::string>>>& corrections){
+void loaders::load_corrections(const std::string& path, std::vector<std::pair<std::string, std::string>>& corrections){
     corrections.clear();
-    std::fstream in(path.c_str(), ios_base::in);
+	 std::fstream in(path.c_str(), std::ios_base::in);
     std::string word, repl;
     while(in >> word){
         in >> repl;
@@ -108,11 +108,11 @@ void loaders::load_data(const std::string& pathTrain,
     getRegexps(replacements);
     
     // Load train file for processing.
-    std::fstream train_file(pathTrain.c_str(), ios_base::in);
+    std::fstream train_file(pathTrain.c_str(), std::ios_base::in);
     std::string sample;
     for(int line_cmp=0;getline(train_file,sample);line_cmp++){
         auto& finalSample = trainText[line_cmp];
-        labels[line_cmp] = line[0] == '1';
+		  labels[line_cmp] = sample[0] == '1';
         
         // Replace smileys with smiley/saddey token.
         for(std::pair<std::string, bool> p : smileys)
@@ -144,7 +144,7 @@ void loaders::load_data(const std::string& pathTrain,
     train_file.close();
     
     // Load test file for processing.
-    std::fstream test_file(pathTest.c_str(), ios_base::in);
+	 std::fstream test_file(pathTest.c_str(), std::ios_base::in);
     for(int line_cmp=0;getline(test_file,sample);line_cmp++){
         auto& finalSample = testText[line_cmp];
         
