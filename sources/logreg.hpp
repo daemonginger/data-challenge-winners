@@ -13,6 +13,7 @@ private:
 	pair<double,vec> gradg(const sp_mat&,const vec&,const vec&,const double&,const double&);
 	double norm(const pair<double,vec>&);
 public:
+	bool verbose = 0;
 	double w0,C,tol,alpha;
 	vec w;
 	logreg(const double&,const double&,const double&);

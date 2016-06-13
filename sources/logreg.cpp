@@ -33,15 +33,21 @@ void logreg::fit(const sp_mat& X,const vec& y)
 	for(int i=0;i<n;i++)
 		if(Y[i] == 0.)
 			Y[i] = -1.;
-	
+	int iters = 0;
 	do
 	{
-		cout << norm_grad << endl;
+		++iters;
+		if(verbose)
+			cout << norm_grad << endl;
 		cur_grad = gradg(X,Y,w,w0,C);
 		norm_grad = norm(cur_grad);
 		w0 -= alpha*cur_grad.first;
 		w -= alpha*cur_grad.second;
+// 		alpha *= 0.9998;
 	}while(norm_grad > tol);
+	
+	if(verbose)
+		cout << "Iterations : " << iters << endl;
 }
 
 uvec logreg::predict(const sp_mat& X)

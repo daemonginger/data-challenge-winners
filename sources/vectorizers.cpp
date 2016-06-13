@@ -1,6 +1,6 @@
 #include"vectorizers.hpp"
 
-sp_mat vectorizers::bin_vectorize(const std::vector<std::vector<std::string> >& text,const vector<int>& grams)
+sp_mat vectorizers::bin_vectorize(std::vector<std::vector<std::string> > text,const std::vector<int>& grams)
 {
 	unsigned int min_size = 1;
 	std::map<std::string,int> voca;
@@ -57,11 +57,35 @@ sp_mat vectorizers::bin_vectorize(const std::vector<std::vector<std::string> >& 
 	return sp_mat(A,ones<vec>(tot_size));
 }
 
-sp_mat vectorizers::count_vectorize(const std::vector<std::vector<std::string> >& text,const vector<int>& grams)
+sp_mat vectorizers::count_vectorize(std::vector<std::vector<std::string> > text,const std::vector<int>& grams)
 {
 	unsigned int min_size = 1;
 	std::map<std::string,int> voca;
 	int tot_size = 0;
+	
+	// Doesn't seem to work properly.
+		std::vector<std::vector<std::string> > text_aux(text.size());
+		for(unsigned int n : grams)
+		{
+			for(int k=0;k<(int)text.size();k++)
+			{
+				auto sample = text[k];
+				for(int i=0;i<(int)sample.size()-(int)n+1;i++)
+				{
+					std::string word;
+					for(unsigned int j=i;(int)j<i+(int)n;j++)
+					{
+						word += sample[j];
+						if(j != i+n-1)
+							word += " ";
+					}
+					transform(word.begin(),word.end(),word.begin(),::tolower);
+					text_aux[k].push_back(word);
+				}
+			}
+		}
+		text = text_aux;
+	
 	for(auto sample : text)
 	{
 		std::set<std::string> faitchier;

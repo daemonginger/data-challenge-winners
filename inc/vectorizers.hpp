@@ -21,8 +21,8 @@ using namespace arma;
 
 namespace vectorizers
 {
-	sp_mat count_vectorize(const std::vector<std::vector<std::string> >&);
-	sp_mat bin_vectorize(const std::vector<std::vector<std::string> >&);
+	sp_mat count_vectorize(std::vector<std::vector<std::string> >,const std::vector<int>&);
+	sp_mat bin_vectorize(std::vector<std::vector<std::string> >,const std::vector<int>&);
 };
 
 #endif
