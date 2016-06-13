@@ -13,4 +13,6 @@
 
 #include"bernouilli_naive_bayes.hpp"
 
+#include"logreg.hpp"
+
 #endif

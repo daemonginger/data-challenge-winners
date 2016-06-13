@@ -65,6 +65,7 @@ std::vector<std::unordered_map<std::string,int> > vectorizers::n_gram_vectorize(
 
 sp_mat vectorizers::bin_vectorize(const std::vector<std::vector<std::string> >& text)
 {
+	unsigned int min_size = 1;
 	std::map<std::string,int> voca;
 	int tot_size = 0;
 	for(auto sample : text)
@@ -72,18 +73,23 @@ sp_mat vectorizers::bin_vectorize(const std::vector<std::vector<std::string> >& 
 		std::set<std::string> faitchier;
 		for(auto word : sample)
 		{
-			transform(word.begin(),word.end(),word.begin(),::tolower);
-			faitchier.insert(word);
+			if(word.size() > min_size)
+			{
+				transform(word.begin(),word.end(),word.begin(),::tolower);
+				faitchier.insert(word);
+			}
 		}
 		tot_size += faitchier.size();
 		for(auto word : sample)
 		{
-			transform(word.begin(),word.end(),word.begin(),::tolower);
-			voca[word] = 1;
+			if(word.size() > min_size)
+			{
+				transform(word.begin(),word.end(),word.begin(),::tolower);
+				voca[word] = 1;
+			}
 		}
 	}
 	umat A(2,tot_size);
-	cout << voca.size() << endl;
 	int cmp = 0;
 	for(auto& p : voca)
 		p.second = cmp++;
@@ -95,14 +101,20 @@ sp_mat vectorizers::bin_vectorize(const std::vector<std::vector<std::string> >& 
 		std::set<std::string> faitchier;
 		for(auto word : sample)
 		{
-			transform(word.begin(),word.end(),word.begin(),::tolower);
-			faitchier.insert(word);
+			if(word.size() > min_size)
+			{
+				transform(word.begin(),word.end(),word.begin(),::tolower);
+				faitchier.insert(word);
+			}
 		}
 		for(auto word : faitchier)
 		{
-			transform(word.begin(),word.end(),word.begin(),::tolower);
-			A(0,cmp) = i;
-			A(1,cmp++) = voca[word];
+			if(word.size() > min_size)
+			{
+				transform(word.begin(),word.end(),word.begin(),::tolower);
+				A(0,cmp) = i;
+				A(1,cmp++) = voca[word];
+			}
 		}
 	}
 	return sp_mat(A,ones<vec>(tot_size));
