@@ -26,7 +26,7 @@ HEADER_FILES = test.hpp loaders.hpp vectorizers.hpp naive_bayes.hpp utils.hpp be
 # Default target
 .PHONY: all
 all: $(OUTPUTFILE)
-
+ 
 # Build libtest.a from test.o
 $(OUTPUTFILE): $(OBJECT_FILES)
 	ar ru $@ $^
