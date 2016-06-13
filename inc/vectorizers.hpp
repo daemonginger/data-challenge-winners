@@ -17,12 +17,12 @@
 typedef boost::numeric::ublas::compressed_matrix<double> sparsem;
 typedef unsigned char uchar;
 
+using namespace arma;
+
 namespace vectorizers
 {
-	std::vector<std::unordered_set<std::string> > hash_vectorize(const std::vector<std::vector<std::string> >&,const std::unordered_set<std::string>&);
-	std::vector<std::unordered_map<std::string,int> > count_vectorize(const std::vector<std::vector<std::string> >&,const std::unordered_set<std::string>&);
-	std::vector<std::unordered_map<std::string,int> > n_gram_vectorize(const std::vector<std::vector<std::string> >&,const std::vector<int>&);
-	arma::sp_mat bin_vectorize(const std::vector<std::vector<std::string> >&);
+	sp_mat count_vectorize(const std::vector<std::vector<std::string> >&);
+	sp_mat bin_vectorize(const std::vector<std::vector<std::string> >&);
 };
 
 #endif

@@ -28,7 +28,7 @@ Arpack :
 http://packages.ubuntu.com/source/precise/arpack
 Intalle aussi le paquet de dev.
 
-SuperLU :
+SuperLU : Si galère on peut s'en passer. Armadillo compile quand mais a priori les inversions de matrices sparses seront plus lentes.
 Amardillo voudra une version >= 4.
 https://www.howtoinstall.co/en/ubuntu/utopic/libsuperlu-dev
 Comme tu peux le voir, le paquet ne marche qu'à partir de ubuntu 14.10 :)

@@ -36,6 +36,7 @@ void logreg::fit(const sp_mat& X,const vec& y)
 	
 	do
 	{
+		cout << norm_grad << endl;
 		cur_grad = gradg(X,Y,w,w0,C);
 		norm_grad = norm(cur_grad);
 		w0 -= alpha*cur_grad.first;
