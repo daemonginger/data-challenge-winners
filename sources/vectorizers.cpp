@@ -141,3 +141,16 @@ sp_mat vectorizers::count_vectorize(std::vector<std::vector<std::string> > text,
 	}
 	return sp_mat(A,vec(vals));
 }
+
+sp_mat vectorizers::tfidf_vectorize(std::vector<std::vector<std::string>> text,const std::vector<int>& grams){
+    sp_mat A = vectorizers::count_vectorize(text, grams);
+    
+    sp_mat idfMatrix(A.n_cols, A.n_cols);
+    for(int i=0;i<(int)A.n_cols;++i){
+        sp_mat col = A.col(i);   // Number of documents in which term i appears.
+        double idf = log(A.n_rows / (double)(1 + col.n_nonzero));
+        idfMatrix(i,i) = idf;
+    }
+    
+    return A * idfMatrix;
+}

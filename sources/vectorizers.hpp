@@ -23,6 +23,7 @@ namespace vectorizers
 {
 	sp_mat count_vectorize(std::vector<std::vector<std::string> >,const std::vector<int>&);
 	sp_mat bin_vectorize(std::vector<std::vector<std::string> >,const std::vector<int>&);
+    sp_mat tfidf_vectorize(std::vector<std::vector<std::string>>,const std::vector<int>&);
 };
 
 #endif
