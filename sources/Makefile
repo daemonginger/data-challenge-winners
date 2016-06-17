@@ -15,13 +15,13 @@ INCDIR = ../inc
 CFLAGS = -std=c++11 -O2 -Wall -Wextra -larmadillo
 
 # Specify object files
-OBJECT_FILES = test.o loaders.o vectorizers.o naive_bayes.o utils.o bernouilli_naive_bayes.o logreg.o
+OBJECT_FILES = loaders.o vectorizers.o naive_bayes.o logreg.o
 
 # Specify source files
-SOURCE_FILES = test.cpp loaders.cpp vectorizers.cpp naive_bayes.cpp utils.cpp bernouilli_naive_bayes.cpp logreg.cpp
+SOURCE_FILES = loaders.cpp vectorizers.cpp naive_bayes.cpp logreg.cpp
 
 # Specify header files
-HEADER_FILES = test.hpp loaders.hpp vectorizers.hpp naive_bayes.hpp utils.hpp bernouilli_naive_bayes.hpp logreg.hpp
+HEADER_FILES = loaders.hpp vectorizers.hpp naive_bayes.hpp logreg.hpp
 
 # Default target
 .PHONY: all

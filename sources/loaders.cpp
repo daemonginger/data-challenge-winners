@@ -1,8 +1,5 @@
 #include"loaders.hpp"
 
-// Each sample (message) is represented as a boolean for his class (only for the training set), and a vector of strings representing the words composing it
-// with length >= min_size. Only alphanumeric characters can be part of a word. Every other character is considered as a delimiter.
-
 void loaders::load_smileys(const std::string& path, std::vector<std::pair<std::string, bool>>& smileys){
     smileys.clear();
 	 std::fstream in(path.c_str(), std::ios_base::in);
@@ -48,10 +45,15 @@ void loaders::getRegexps(std::vector<std::pair<std::string, std::string>>& repla
     replacements.push_back(std::make_pair("\\s+"," "));
     // Replace repeated characters
     replacements.push_back(std::make_pair("(.)\\1{2,}", "\\1\\1"));
+	 // Replace words starting by 'you' with you
+// 	 replacements.push_back(std::make_pair("\\s+you[a-zA-Z]*\\s*", " you "));
 }
 
 void loaders::load_train(const std::string& path,std::vector<std::vector<std::string> >& text,std::vector<bool>& labels)
 {
+	
+	// Each sample (message) is represented as a boolean for his class (only for the training set), and a vector of strings representing the words composing it
+	// with length >= min_size. Only alphanumeric characters can be part of a word. Every other character is considered as a delimiter.
 	text.resize(loaders::train_size);
 	labels.resize(loaders::train_size);
 	
@@ -87,7 +89,9 @@ void loaders::load_data(const std::string& pathTrain,
                         const std::string& pathTest, 
                         std::vector<std::vector<std::string>>& trainText, 
                         std::vector<bool>& labels,
-                        std::vector<std::vector<std::string>>& testText){
+                        std::vector<std::vector<std::string>>& testText,
+								const int& stem_length,
+								const unsigned int& min_size){
     // Resize vectors just to be sure.
     trainText.resize(loaders::train_size);
     testText.resize(loaders::test_size);
@@ -139,7 +143,13 @@ void loaders::load_data(const std::string& pathTrain,
         std::stringstream ss(sample);
         std::string word;
         while(ss >> word)
-            finalSample.push_back(word);
+			  if(word.size() >= min_size)
+				{
+					if(stem_length == -1 || (int)word.size() < stem_length)
+						finalSample.push_back(word);
+					else
+						finalSample.push_back(word.substr(0,stem_length));
+				}
     }
     train_file.close();
     
@@ -172,8 +182,15 @@ void loaders::load_data(const std::string& pathTrain,
         // Save to output vector.
         std::stringstream ss(sample);
         std::string word;
-        while(ss >> word)
-            finalSample.push_back(word);
+		  
+		  while(ss >> word)
+			  if(word.size() >= min_size)
+			  {
+				  if(stem_length == -1 || (int)word.size() < stem_length)
+					  finalSample.push_back(word);
+				  else
+					  finalSample.push_back(word.substr(0,stem_length));
+			  }
     }
     test_file.close();
 }

@@ -24,10 +24,11 @@ void logreg::fit(const sp_mat& X,const vec& y)
 {
 	int n = X.n_rows;
 	int p = X.n_cols;
+	
 	w0 = 0.;
 	w = zeros<vec>(p);
 	pair<double,vec> cur_grad;
-	double norm_grad = 0.;
+	double norm_grad = 0.,old_norm = 0.;
 	
 	vec Y = y;
 	for(int i=0;i<n;i++)
@@ -39,11 +40,15 @@ void logreg::fit(const sp_mat& X,const vec& y)
 		++iters;
 		if(verbose)
 			cout << norm_grad << endl;
+		old_norm = norm_grad;
 		cur_grad = gradg(X,Y,w,w0,C);
 		norm_grad = norm(cur_grad);
 		w0 -= alpha*cur_grad.first;
 		w -= alpha*cur_grad.second;
-// 		alpha *= 0.9998;
+		// This is a dirty trick but is seems to work?
+		if(iters != 1)
+			alpha *= (norm_grad > old_norm ? -0.1 : 0.1) + 1.;
+		
 	}while(norm_grad > tol);
 	
 	if(verbose)
