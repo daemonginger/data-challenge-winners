@@ -1,6 +1,0 @@
-Méthode générale : vérifier notre implémentation en regardant ce que fait scikit-learn.
-
-L'implem est celle de liblinear :
-https://www.csie.ntu.edu.tw/~cjlin/papers/liblinear.pdf
-
-La logreg fonctionne bien maintenant.
