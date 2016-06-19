@@ -34,7 +34,7 @@ void logreg::fit(const sp_mat& X,const vec& y)
 	for(int i=0;i<n;i++)
 		if(Y(i) == 0.)
 			Y(i) = -1.;
-	int iters = 0;
+		int iters = 0;
 	do
 	{
 		++iters;

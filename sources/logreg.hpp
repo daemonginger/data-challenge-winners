@@ -14,9 +14,9 @@ private:
 	double norm(const pair<double,vec>&);
 public:
 	bool verbose = 0;
-	double w0,C,tol,alpha;
+	double w0,C,tol,alpha,correct_rate;
 	vec w;
-	logreg(const double&,const double&,const double&);
+	logreg(const double&,const double&,const double&,const double&);
 	void fit(const sp_mat&,const vec&);
 	uvec predict(const sp_mat&);
 	double score(const sp_mat&,const vec&);

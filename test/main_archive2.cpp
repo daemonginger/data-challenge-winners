@@ -71,7 +71,7 @@ int main(void)
 	vec Y_train(vector<double>(y_train.begin(),y_train.begin() + n)),Y_valid(vector<double>(y_train.begin() + n,y_train.end()));
 	
 	
-	double C = 51.,tol = 1e-3,alpha = 0.00002,correct_rate = 0.1;
+	double C = 49.,tol = 1e-5,alpha = 0.00002,correct_rate = 0.1;
 	logreg clf = logreg(C,tol,alpha,correct_rate);
 	clf.verbose = true;
 	clf.fit(X_train,Y_train);
@@ -79,6 +79,12 @@ int main(void)
 	// 	cout << clf.w.head(20) << endl;
 	// 	cout << clf.w0 << endl;
 	cout << "Score on validation : " << clf.score(X_valid,Y_valid) << endl;
+	// 0.812217 with no stemming and min_length = 1
+	
+	// value = 3242.18 tol = 1e-1
+	// value = 3242.1  tol = 1e-2
+	// value = 3242.09 tol = 1e-5
+	// value = 3242.09 tol = 1e-8
 	
 	return 0;
 }

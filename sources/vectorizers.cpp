@@ -29,13 +29,13 @@ sp_mat vectorizers::bin_vectorize(std::vector<std::vector<std::string> > text,co
 	
 	for(auto sample : text)
 	{
-		std::set<std::string> faitchier;
+		std::set<std::string> sample_voc;
 		for(auto word : sample)
 		{
 			transform(word.begin(),word.end(),word.begin(),::tolower);
-			faitchier.insert(word);
+			sample_voc.insert(word);
 		}
-		tot_size += faitchier.size();
+		tot_size += sample_voc.size();
 		for(auto word : sample)
 		{
 			transform(word.begin(),word.end(),word.begin(),::tolower);
@@ -51,13 +51,13 @@ sp_mat vectorizers::bin_vectorize(std::vector<std::vector<std::string> > text,co
 	for(int i=0;i<(int)text.size();i++)
 	{
 		auto sample = text[i];
-		std::set<std::string> faitchier;
+		std::set<std::string> sample_voc;
 		for(auto word : sample)
 		{	
 			transform(word.begin(),word.end(),word.begin(),::tolower);
-			faitchier.insert(word);
+			sample_voc.insert(word);
 		}
-		for(auto word : faitchier)
+		for(auto word : sample_voc)
 		{
 			transform(word.begin(),word.end(),word.begin(),::tolower);
 			A(0,cmp) = i;
@@ -96,13 +96,13 @@ sp_mat vectorizers::count_vectorize(std::vector<std::vector<std::string> > text,
 	
 	for(auto sample : text)
 	{
-		std::set<std::string> faitchier;
+		std::set<std::string> sample_voc;
 		for(auto word : sample)
 		{
 			transform(word.begin(),word.end(),word.begin(),::tolower);
-			faitchier.insert(word);
+			sample_voc.insert(word);
 		}
-		tot_size += faitchier.size();
+		tot_size += sample_voc.size();
 		for(auto word : sample)
 		{
 			transform(word.begin(),word.end(),word.begin(),::tolower);
@@ -120,13 +120,13 @@ sp_mat vectorizers::count_vectorize(std::vector<std::vector<std::string> > text,
 	for(int i=0;i<(int)text.size();i++)
 	{
 		auto sample = text[i];
-		std::map<std::string,int> faitchier;
+		std::map<std::string,int> sample_voc;
 		for(auto word : sample)
 		{
 			transform(word.begin(),word.end(),word.begin(),::tolower);
-			++faitchier[word];
+			++sample_voc[word];
 		}
-		for(auto pa : faitchier)
+		for(auto pa : sample_voc)
 		{
 			auto word = pa.first;
 			transform(word.begin(),word.end(),word.begin(),::tolower);

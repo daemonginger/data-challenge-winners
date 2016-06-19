@@ -23,7 +23,7 @@ void loaders::load_corrections(const std::string& path, std::vector<std::pair<st
     in.close();
 }
 
-void loaders::getRegexps(std::vector<std::pair<std::string, std::string>>& replacements){
+void loaders::getRegexps(std::vector<std::pair<std::string, std::string>>& replacements,const bool& you_stem){
     replacements.clear();
     // Remove first character and comma
     replacements.push_back(std::make_pair("^[01],", " "));
@@ -46,7 +46,8 @@ void loaders::getRegexps(std::vector<std::pair<std::string, std::string>>& repla
     // Replace repeated characters
     replacements.push_back(std::make_pair("(.)\\1{2,}", "\\1\\1"));
 	 // Replace words starting by 'you' with you
-// 	 replacements.push_back(std::make_pair("\\s+you[a-zA-Z]*\\s*", " you "));
+// 	 if(you_stem)
+		replacements.push_back(std::make_pair("\\s+you[a-zA-Z]*\\s*", " you "));
 }
 
 void loaders::load_train(const std::string& path,std::vector<std::vector<std::string> >& text,std::vector<bool>& labels)
@@ -90,8 +91,9 @@ void loaders::load_data(const std::string& pathTrain,
                         std::vector<std::vector<std::string>>& trainText, 
                         std::vector<bool>& labels,
                         std::vector<std::vector<std::string>>& testText,
-								const int& stem_length,
-								const unsigned int& min_size){
+								const int& stem_length, // Defaults to -1 : don't stem
+								const unsigned int& min_size, // Defaults to 2 : words of length 1 are ignored.
+								const bool& you_stem){ // Defaults to 0 : don't you-stem
     // Resize vectors just to be sure.
     trainText.resize(loaders::train_size);
     testText.resize(loaders::test_size);
@@ -109,7 +111,7 @@ void loaders::load_data(const std::string& pathTrain,
     
     // Prepare list of regex replacements to be made.
     std::vector<std::pair<std::string, std::string>> replacements;
-    getRegexps(replacements);
+    getRegexps(replacements, you_stem);
     
     // Load train file for processing.
     std::fstream train_file(pathTrain.c_str(), std::ios_base::in);

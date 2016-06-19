@@ -6,7 +6,7 @@
 using namespace arma;
 using namespace std;
 
-class logreg
+class linearSVC
 {
 private:
 	double g(const sp_mat&,const vec&,const vec&,const double&,const double&);

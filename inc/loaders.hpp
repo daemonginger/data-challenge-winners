@@ -15,10 +15,13 @@ namespace loaders
                             const std::string&, 
                             std::vector<std::vector<std::string> >&, 
                             std::vector<bool>&,
-                            std::vector<std::vector<std::string> >&);
+                            std::vector<std::vector<std::string> >&,
+									 const int& = -1,
+									 const unsigned int& = 2,
+									 const bool& = 0);
     void load_smileys(const std::string&, std::vector<std::pair<std::string, bool>>&);
     void load_corrections(const std::string&, std::vector<std::pair<std::string, std::string>>&);
-    void getRegexps(std::vector<std::pair<std::string, std::string>>&);
+    void getRegexps(std::vector<std::pair<std::string, std::string>>&,const bool&);
 	void load_test(const std::string&,std::vector<std::vector<std::string> >&);
 };
 
