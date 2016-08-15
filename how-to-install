@@ -1,24 +1,27 @@
-Il faut instaler boost.
+Libraries à installer : Boost, Armadillo, OpenBlas, Lapack, Arpack, SuperLU (facultative)
+
+Boost :
+
 DL par ici : http://www.boost.org/users/history/version_1_61_0.html
 Décompresser, puis dans le dossier de boost :
 
 ./boostrap.sh
-sudo ./b2 (ça met un certain temps de build la lib.)
+sudo ./b2 (ça met un certain temps de build la lib)
 
-Pour Armadillo :
+Armadillo :
 
-Faut download ici :
 http://arma.sourceforge.net/download.html
+Prendre armadillo-6.700.7.tar.xz
 
-La version qu'on veut est armadillo-6.700.7.tar.xz
+Avant toute chose il faut install gfortran et cmake
+Il faut aussi mettre gcc et g++ en version 4.8
 
-Avant toute chose tu dois install gfortran et cmake.
-Tu dois aussi mettre gcc et g++ en version 4.8
+OpenBlas :
 
-Tu as besoin d'installer ces libs avant :
-OpenBlas : Tu peux suivre https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide
+Tu peux suivre https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide
 
 Lapack :
+
 sudo apt-get install libblas-dev checkinstall
 sudo apt-get install libblas-doc checkinstall
 sudo apt-get install liblapacke-dev checkinstall
@@ -26,13 +29,13 @@ sudo apt-get install liblapack-doc checkinstall
 
 Arpack :
 http://packages.ubuntu.com/source/precise/arpack
-Intalle aussi le paquet de dev.
+Intaller aussi le paquet de dev
 
-SuperLU : Si galère on peut s'en passer. Armadillo compile quand mais a priori les inversions de matrices sparses seront plus lentes.
+SuperLU : Si l'installation est trop difficile, on peut s'en passer. Armadillo compile quand même, mais a priori les inversions de matrices creuses seront plus lentes.
 Amardillo voudra une version >= 4.
 https://www.howtoinstall.co/en/ubuntu/utopic/libsuperlu-dev
-Comme tu peux le voir, le paquet ne marche qu'à partir de ubuntu 14.10 :)
-Donc ou bien tu upgrade ton ubuntu, ou bien tu trouves un moyen d'installer le package quand mếme, ou bien tu trouves un moyen d'installer from source qui fonctionne (j'ai essayé, j'ai regretté).
+Le paquet ne marche qu'à partir de ubuntu 14.10 :)
+Il est peut-être aussi possible d'installer la lib à partir de sources.
 
 Pour build notre lib :
 
