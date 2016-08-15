@@ -6,5 +6,5 @@ The task consisted in detecting insulting messages from social media. The data w
 Our C++ lib contains basic feature extraction from text and a logistic regression on sparse data.
 To use it, you will need to install libraries:
 
-Boost, Armadillo, OpenBlas, Lapack, Arpack, SuperLU (facultative).
+Boost, Armadillo, OpenBlas, Lapack, Arpack, SuperLU (optional).
 Check the how-to-install file to get more precisions for installations (in french!).
