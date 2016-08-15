@@ -1,5 +1,5 @@
 # data-challenge-winners
-Repo for the data challenge of the SD207 course at Télécom ParisTech. June 2016
+Data challenge of the SD207 course at Télécom ParisTech in June, 2016
 
 The task consisted in detecting insulting messages from social media. The data was taken from a Kaggle challenge.
 
